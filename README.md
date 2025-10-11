@@ -91,10 +91,21 @@ open Package.swift
 - [AT Commands Reference](https://www.sparkfun.com/datasheets/Widgets/ELM327_AT_Commands.pdf)
 
 ### Proyectos similares de referencia
+
+#### Swift/iOS
+- **[SwiftOBD2](https://github.com/kkonteh97/SwiftOBD2)** ⭐ - Toolkit OBD2 versátil para desarrolladores Swift (actualizado recientemente)
+- **[LTSupportAutomotive](https://github.com/mickeyl/LTSupportAutomotive)** - Librería iOS/watchOS/macOS para OBD2 (Objective-C)
+
+#### Otras plataformas (referencia)
+- [ELMduino](https://github.com/PowerBroker2/ELMduino) - Librería Arduino para ELM327 (C++)
 - [python-OBD](https://github.com/brendan-w/python-OBD) - Librería Python para OBD-II
-- [OBDSim](https://github.com/Ircama/OBDSim) - Simulador de dispositivo OBD-II
-- [torque-obd2-plugin](https://github.com/frankcaron/torque-obd2-plugin) - Plugin para Torque
-- Buscar más en: [GitHub OBD-II projects](https://github.com/topics/obd2)
+- [AndrOBD](https://github.com/fr3ts0n/AndrOBD) - App Android para diagnóstico OBD
+- [ELM327-emulator](https://github.com/Ircama/ELM327-emulator) - Emulador ELM327 para testing
+
+#### Recursos útiles
+- [awesome-canbus](https://github.com/iDoka/awesome-canbus) - Lista curada de herramientas CAN bus
+- [awesome-automotive-can-id](https://github.com/iDoka/awesome-automotive-can-id) - Colección de CAN IDs por fabricante
+- Más proyectos: [GitHub OBD2 projects](https://github.com/topics/obd2) | [GitHub ELM327 projects](https://github.com/topics/elm327)
 
 ## 🤝 Contribuir
 
