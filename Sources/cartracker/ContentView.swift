@@ -25,7 +25,15 @@ struct ContentView: View {
                             isConnected: bluetoothManager.isConnected,
                             status: bluetoothManager.connectionStatus,
                             onConnectTap: { showDeviceList = true },
-                            onDisconnectTap: { bluetoothManager.disconnect() }
+                            onDisconnectTap: { 
+                                if bluetoothManager.isDemoMode {
+                                    bluetoothManager.stopDemoMode()
+                                } else {
+                                    bluetoothManager.disconnect()
+                                }
+                            },
+                            onDemoTap: { bluetoothManager.startDemoMode() },
+                            isDemoMode: bluetoothManager.isDemoMode
                         )
                         
                         if bluetoothManager.isConnected {
@@ -75,35 +83,63 @@ struct ConnectionHeaderView: View {
     let status: String
     let onConnectTap: () -> Void
     let onDisconnectTap: () -> Void
+    let onDemoTap: (() -> Void)?
+    let isDemoMode: Bool
     
     var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Estado de Conexión")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                
-                HStack {
-                    Circle()
-                        .fill(isConnected ? Color.green : Color.red)
-                        .frame(width: 12, height: 12)
+        VStack(spacing: 12) {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Estado de Conexión")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
                     
-                    Text(status)
-                        .font(.headline)
+                    HStack {
+                        Circle()
+                            .fill(isConnected ? Color.green : Color.red)
+                            .frame(width: 12, height: 12)
+                        
+                        Text(status)
+                            .font(.headline)
+                    }
+                }
+                
+                Spacer()
+                
+                Button(action: isConnected ? onDisconnectTap : onConnectTap) {
+                    Text(isConnected ? "Desconectar" : "Conectar")
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+                        .background(isConnected ? Color.red : Color.blue)
+                        .cornerRadius(20)
                 }
             }
             
-            Spacer()
-            
-            Button(action: isConnected ? onDisconnectTap : onConnectTap) {
-                Text(isConnected ? "Desconectar" : "Conectar")
+            // Botón de modo demo
+            if let onDemoTap = onDemoTap, !isConnected {
+                Button(action: onDemoTap) {
+                    HStack {
+                        Image(systemName: "play.circle.fill")
+                        Text("Modo Demo (Sin Hardware)")
+                    }
                     .font(.subheadline)
                     .fontWeight(.semibold)
                     .foregroundColor(.white)
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 10)
-                    .background(isConnected ? Color.red : Color.blue)
-                    .cornerRadius(20)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(Color.purple)
+                    .cornerRadius(12)
+                }
+            } else if isDemoMode {
+                HStack {
+                    Image(systemName: "info.circle.fill")
+                    Text("Usando datos simulados para demostración")
+                        .font(.caption)
+                }
+                .foregroundColor(.purple)
             }
         }
         .padding()

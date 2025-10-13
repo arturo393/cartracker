@@ -20,6 +20,10 @@ class BluetoothManager: NSObject {
     
     var vehicleData = VehicleData()
     
+    // Demo mode para testing sin hardware
+    var isDemoMode: Bool = false
+    private var demoTimer: Timer?
+    
     private var receivedData = Data()
     private var pendingCommand: String?
     private var commandCompletion: ((String?) -> Void)?
@@ -203,6 +207,71 @@ class BluetoothManager: NSObject {
         sendCommand(OBDCommand.clearDTCs.fullCommand) { response in
             completion(response != nil)
         }
+    }
+    
+    // MARK: - Demo Mode
+    
+    /// Inicia el modo demo con datos simulados (para testing sin hardware)
+    func startDemoMode() {
+        isDemoMode = true
+        isConnected = true
+        connectionStatus = "Modo Demo Activo"
+        vehicleData.isConnected = true
+        
+        // Simular datos realistas del vehículo
+        demoTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            
+            // Simular variaciones realistas
+            let baseRPM = 1500
+            let rpmVariation = Int.random(in: -200...400)
+            self.vehicleData.rpm = max(800, baseRPM + rpmVariation)
+            
+            let baseSpeed = 60
+            let speedVariation = Int.random(in: -5...10)
+            self.vehicleData.speed = max(0, min(120, baseSpeed + speedVariation))
+            
+            // Temperatura se calienta gradualmente
+            if self.vehicleData.engineTemp < 90 {
+                self.vehicleData.engineTemp += 1
+            } else {
+                self.vehicleData.engineTemp = Int.random(in: 88...92)
+            }
+            
+            // Combustible baja lentamente
+            if self.vehicleData.fuelLevel > 20 {
+                self.vehicleData.fuelLevel -= 0.01
+            } else {
+                self.vehicleData.fuelLevel = Double.random(in: 20...25)
+            }
+            
+            self.vehicleData.throttlePosition = Double.random(in: 10...45)
+            self.vehicleData.engineLoad = Double.random(in: 20...60)
+            self.vehicleData.maf = Double.random(in: 3...15)
+            
+            // Simular algunos códigos DTC ocasionalmente
+            if Int.random(in: 0...20) == 0 {
+                self.vehicleData.dtcCodes = [
+                    DTCCode(code: "P0420", description: "Catalizador - Banco 1", severity: .minor),
+                    DTCCode(code: "P0171", description: "Sistema muy pobre - Banco 1", severity: .major)
+                ]
+            } else if Int.random(in: 0...10) == 0 {
+                self.vehicleData.dtcCodes = []
+            }
+            
+            self.vehicleData.lastUpdate = Date()
+        }
+    }
+    
+    /// Detiene el modo demo
+    func stopDemoMode() {
+        isDemoMode = false
+        demoTimer?.invalidate()
+        demoTimer = nil
+        isConnected = false
+        connectionStatus = "Desconectado"
+        vehicleData.isConnected = false
+        vehicleData.dtcCodes = []
     }
 }
 
