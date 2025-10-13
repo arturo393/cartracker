@@ -122,7 +122,38 @@ Las contribuciones son bienvenidas! Por favor:
 - **Issues**: [github.com/arturo393/cartracker/issues](https://github.com/arturo393/cartracker/issues)
 - **Project Board**: [github.com/users/arturo393/projects/4](https://github.com/users/arturo393/projects/4)
 
-## 📄 Licencia
+## � Documentación Adicional
+
+- **[Arquitectura](/.github/ARCHITECTURE.md)**: Documentación técnica detallada del proyecto
+- **[Guía de Contribución](/.github/CONTRIBUTING.md)**: Cómo contribuir al proyecto
+- **[Referencias](/.github/REFERENCES.md)**: Proyectos y recursos de referencia
+
+## 🧪 Testing
+
+El proyecto incluye una suite completa de tests unitarios:
+
+```bash
+# Ejecutar todos los tests
+swift test
+
+# Ejecutar con cobertura
+swift test --enable-code-coverage
+
+# Desde Xcode
+Cmd+U
+```
+
+**Cobertura actual**: >80% en parsers OBD-II y lógica de negocio
+
+## 🔄 CI/CD
+
+GitHub Actions configurado para:
+- ✅ Build automático en macOS
+- ✅ Ejecución de tests
+- ✅ SwiftLint (calidad de código)
+- ✅ Markdown linting
+
+## �📄 Licencia
 
 Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
