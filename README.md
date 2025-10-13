@@ -2,6 +2,10 @@
 
 Una aplicación iOS para leer y almacenar datos de vehículos en tiempo real utilizando el lector ELM327 conectado al puerto OBD-II mediante Bluetooth.
 
+> **🚀 NUEVO**: Incluye **Modo Demo** para probar sin hardware ELM327
+> 
+> **📱 ¿Quieres probar la app?** Lee la [Guía de Prueba](COMO_PROBAR.md) para instrucciones paso a paso
+
 ## 📋 Descripción
 
 CarTracker permite monitorear los datos del vehículo en tiempo real, almacenarlos en una base de datos local y visualizarlos de manera intuitiva. El proyecto incluye soporte para ingeniería inversa de PIDs propietarios de diferentes fabricantes.
@@ -71,6 +75,44 @@ cd cartracker
 
 # Abrir en Xcode
 open Package.swift
+```
+
+## 🏃 Inicio Rápido
+
+### Opción 1: Modo Demo (Sin Hardware)
+
+Prueba la app sin necesidad de un dispositivo ELM327:
+
+1. Instala Xcode desde App Store
+2. Crea un proyecto iOS en Xcode
+3. Importa los archivos Swift del proyecto
+4. Ejecuta en simulador o dispositivo
+5. Presiona "Modo Demo" para ver datos simulados
+
+**📘 Guía completa**: [COMO_PROBAR.md](COMO_PROBAR.md)
+
+### Opción 2: Con Dispositivo ELM327 Real
+
+1. Conecta el ELM327 al puerto OBD-II del vehículo
+2. Enciende el vehículo
+3. Empareja el ELM327 con Bluetooth
+4. Abre la app y selecciona el dispositivo
+5. ¡Listo para monitorear!
+
+## 🛠️ Comandos Útiles
+
+```bash
+# Ver todos los comandos disponibles
+make help
+
+# Ejecutar tests
+make test
+
+# Limpiar build
+make clean
+
+# Setup proyecto Xcode
+./setup_xcode.sh
 ```
 
 ## 🔧 Configuración del dispositivo ELM327
