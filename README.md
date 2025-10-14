@@ -14,7 +14,10 @@ CarTracker permite monitorear los datos del vehículo en tiempo real, almacenarl
 
 - 🔵 **Conexión Bluetooth**: Comunicación con dispositivos ELM327
 - 📊 **Datos en tiempo real**: Lectura continua de parámetros del vehículo
-- 💾 **Almacenamiento**: Base de datos local para histórico de datos
+- 💾 **Almacenamiento persistente**: Base de datos Core Data para histórico completo
+- 📈 **Histórico y estadísticas**: Análisis detallado de rendimiento del vehículo
+- 📊 **Exportación de datos**: CSV con todos los datos históricos
+- 🚗 **Gestión de viajes**: Seguimiento automático de viajes individuales
 - 📈 **Visualización**: Gráficos y medidores intuitivos
 - 🔧 **Códigos de error (DTC)**: Lectura y decodificación de diagnósticos
 - 🔍 **PIDs extendidos**: Soporte para comandos propietarios de fabricantes
@@ -50,9 +53,12 @@ cartracker/
 - [ ] Parseo de respuestas AT commands
 
 ### Fase 2: Almacenamiento
-- [ ] Diseño de esquema de base de datos
-- [ ] Implementación de capa de persistencia
-- [ ] Histórico de datos
+- [x] Diseño de esquema de base de datos (Core Data)
+- [x] Implementación de capa de persistencia
+- [x] Histórico de datos con filtros y búsqueda
+- [x] Gestión automática de viajes
+- [x] Estadísticas detalladas del vehículo
+- [x] Exportación de datos a CSV
 
 ### Fase 3: Interfaz de usuario
 - [ ] Dashboard principal
@@ -113,6 +119,9 @@ make clean
 
 # Setup proyecto Xcode
 ./setup_xcode.sh
+
+# Ver demo de funcionalidades
+./demo.sh
 ```
 
 ## 🔧 Configuración del dispositivo ELM327

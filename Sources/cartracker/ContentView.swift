@@ -6,6 +6,7 @@ struct ContentView: View {
     @State private var bluetoothManager = BluetoothManager()
     @State private var showDeviceList = false
     @State private var showDTCList = false
+    @State private var showHistory = false
     
     var body: some View {
         NavigationStack {
@@ -56,6 +57,20 @@ struct ContentView: View {
                                 .foregroundColor(.orange)
                                 .cornerRadius(12)
                             }
+                            
+                            // Botón de histórico
+                            Button(action: { showHistory = true }) {
+                                HStack {
+                                    Image(systemName: "chart.line.uptrend.xyaxis")
+                                    Text("Ver Histórico")
+                                    Spacer()
+                                    Image(systemName: "chevron.right")
+                                }
+                                .padding()
+                                .background(Color.blue.opacity(0.2))
+                                .foregroundColor(.blue)
+                                .cornerRadius(12)
+                            }
                         } else {
                             // Vista de estado desconectado
                             DisconnectedView()
@@ -71,6 +86,9 @@ struct ContentView: View {
             }
             .sheet(isPresented: $showDTCList) {
                 DTCListView(bluetoothManager: bluetoothManager)
+            }
+            .sheet(isPresented: $showHistory) {
+                HistoryView()
             }
         }
     }
@@ -608,6 +626,8 @@ struct DTCRowView: View {
 
 // MARK: - Preview
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }

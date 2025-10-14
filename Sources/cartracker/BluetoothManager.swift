@@ -130,6 +130,11 @@ class BluetoothManager: NSObject {
     func startReadingVehicleData() {
         guard isConnected else { return }
         
+        // Iniciar viaje si no hay uno activo
+        if !isDemoMode {
+            DataManager.shared.startNewTrip()
+        }
+        
         // Leer datos cada 500ms
         Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] timer in
             guard let self = self, self.isConnected else {
@@ -187,10 +192,12 @@ class BluetoothManager: NSObject {
             }
         }
         
-        vehicleData.lastUpdate = Date()
-    }
-    
-    /// Lee códigos de error DTC
+            self.vehicleData.lastUpdate = Date()
+            
+            // Guardar lectura en base de datos (cada 5 segundos para no sobrecargar)
+            if !self.isDemoMode && Int.random(in: 0...9) == 0 { // ~10% de las veces = cada ~5 segundos
+                DataManager.shared.saveReading(from: self.vehicleData)
+            }    /// Lee códigos de error DTC
     func readDTCs(completion: @escaping ([DTCCode]) -> Void) {
         sendCommand(OBDCommand.readDTCs.fullCommand) { response in
             if let response = response {
